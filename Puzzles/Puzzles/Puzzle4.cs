@@ -1,44 +1,22 @@
 ﻿namespace AoC2019.Puzzles;
 
-public class Puzzle4 : PuzzleBase<string, int, int>
+public class Puzzle4 : PuzzleBase<(int start, int count), int, int>
 {
     protected override string Filename => "Input/puzzle-input-04.txt";
     protected override string PuzzleTitle => "--- Day 4 Secure Container ---";
     
-    public override int PartOne(string input)
+    public override int PartOne((int start, int count) input)
     {
-        var range = input.Split('-');
-        var start = int.Parse(range[0]);
-        var end = int.Parse(range[1]);
-        var count = 0;
+        var seq = Enumerable.Range(input.start, input.count);
 
-        for (var i = start; i <= end; i++)
-        {
-            if (CheckCriteria(i))
-            {
-                count += 1;
-            }
-        }
-        
-        return count;
+        return seq.Select(code => CheckCriteria(code, part:1)).Count(x => x);
     }
 
-    public override int PartTwo(string input)
+    public override int PartTwo((int start, int count) input)
     {
-        var range = input.Split('-');
-        var start = int.Parse(range[0]);
-        var end = int.Parse(range[1]);
-        var count = 0;
+        var seq = Enumerable.Range(input.start, input.count);
 
-        for (var i = start; i <= end; i++)
-        {
-            if (CheckCriteria(i, part:2))
-            {
-                count += 1;
-            }
-        }
-        
-        return count;
+        return seq.Select(code => CheckCriteria(code, part:2)).Count(x => x);
     }
 
     public static bool CheckCriteria(int x, int part = 1)
@@ -77,7 +55,6 @@ public class Puzzle4 : PuzzleBase<string, int, int>
                 adjacentDouble = true;
                 adjacentDoublePair = digits[k];
             }
-            
         }
 
         return increasing && adjacentDouble;
@@ -93,8 +70,11 @@ public class Puzzle4 : PuzzleBase<string, int, int>
         }
     }
 
-    public override string Preprocess(IPuzzleInput input, int part = 1)
+    public override (int, int) Preprocess(IPuzzleInput input, int part = 1)
     {
-        return input.GetFirstLine();
+        var range = input.GetFirstLine().Split('-');
+        var start = int.Parse(range[0]);
+        var count = int.Parse(range[1]) - start + 1;
+        return (start, count);
     }
 }
