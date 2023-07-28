@@ -5,7 +5,7 @@
         <TargetFramework>net6.0</TargetFramework>
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
-        <RootNamespace>AoC2022</RootNamespace>
+        <RootNamespace>AoC2019</RootNamespace>
     </PropertyGroup>
 
     <ItemGroup>

@@ -87,21 +87,21 @@ public class Coordinate : IEquatable<Coordinate>
         return VerticalRange(this, e, n, list);
     }
     
-    public IEnumerable<Coordinate> HorizontalRange(Coordinate start, int diff, int n, List<Coordinate> list)
+    public static IEnumerable<Coordinate> HorizontalRange(Coordinate start, int diff, int n, List<Coordinate> list)
     {
-        for (int i = 1; i <= n; i++)
+        for (var i = 1; i <= n; i++)
         {
-            list.Add(new Coordinate(start.X + (diff*i), start.Y));   
+            list.Add(new Coordinate(start.X + diff*i, start.Y));   
         }
 
         return list;
     }
     
-    public IEnumerable<Coordinate> VerticalRange(Coordinate start, int diff, int n, List<Coordinate> list)
+    public static IEnumerable<Coordinate> VerticalRange(Coordinate start, int diff, int n, List<Coordinate> list)
     {
-        for (int i = 1; i <= n; i++)
+        for (var i = 1; i <= n; i++)
         {
-            list.Add(new Coordinate(start.X, start.Y+ (diff*i)));   
+            list.Add(new Coordinate(start.X, start.Y + diff*i));
         }
 
         return list;
