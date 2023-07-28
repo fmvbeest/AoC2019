@@ -6,6 +6,9 @@ public class Puzzle3 : PuzzleBase<IEnumerable<IEnumerable<string>>, int, int>
 {
     protected override string Filename => "Input/puzzle-input-03.txt";
     protected override string PuzzleTitle => "--- Day 3: Crossed Wires ---";
+    
+    private static readonly Dictionary<Coordinate, int> WireAPathCost = new();
+    private static readonly Dictionary<Coordinate, int> WireBPathCost = new();
 
     public override int PartOne(IEnumerable<IEnumerable<string>> input)
     {
@@ -20,16 +23,13 @@ public class Puzzle3 : PuzzleBase<IEnumerable<IEnumerable<string>>, int, int>
 
     public override int PartTwo(IEnumerable<IEnumerable<string>> input)
     {
-        var wireASteps = new Dictionary<Coordinate, int>();
-        var wireBSteps = new Dictionary<Coordinate, int>();
-        
         var wires = input.ToArray();
         var center = new Coordinate(0, 0);
         
-        var wireA = GetWirePathWithSteps(wires[0].ToArray(), center, wireASteps);
-        var wireB = GetWirePathWithSteps(wires[1].ToArray(), center, wireBSteps);
+        var wireA = GetWirePathWithSteps(wires[0].ToArray(), center, WireAPathCost);
+        var wireB = GetWirePathWithSteps(wires[1].ToArray(), center, WireBPathCost);
 
-        return wireA.Intersect(wireB).Select(c => IntersectionCost(wireASteps, wireBSteps, c)).Min();
+        return wireA.Intersect(wireB).Select(IntersectionCost).Min();
     }
 
     private static ISet<Coordinate> GetWirePath(IEnumerable<string> instructions, Coordinate center)
@@ -119,9 +119,9 @@ public class Puzzle3 : PuzzleBase<IEnumerable<IEnumerable<string>>, int, int>
         return wire;
     }
 
-    private static int IntersectionCost(Dictionary<Coordinate, int> wireA, Dictionary<Coordinate, int> wireB, Coordinate c)
+    private static int IntersectionCost(Coordinate c)
     {
-        return wireA[c] + wireB[c];
+        return WireAPathCost[c] + WireBPathCost[c];
     }
     
     public override IEnumerable<IEnumerable<string>> Preprocess(IPuzzleInput input, int part = 1)
