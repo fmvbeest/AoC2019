@@ -1,4 +1,5 @@
 ﻿using AoC2019.Util;
+using AoC2019.Util.Navigation;
 
 namespace AoC2019.Puzzles;
 
@@ -37,19 +38,19 @@ public class Puzzle3 : PuzzleBase<IEnumerable<IEnumerable<string>>, int, int>
             switch (direction)
             {
                 case 'U':
-                    coordinates = Coordinate.VerticalRange(current, 1, length, coordinates).ToList();
+                    coordinates = current.VerticalRange(1, length, coordinates).ToList();
                     current += (0, length);
                     break;
                 case 'R':
-                    coordinates = Coordinate.HorizontalRange(current, 1, length, coordinates).ToList();
+                    coordinates = current.HorizontalRange( 1, length, coordinates).ToList();
                     current += (length, 0);
                     break;
                 case 'D':
-                    coordinates = Coordinate.VerticalRange(current, -1, length, coordinates).ToList();
+                    coordinates = current.VerticalRange( -1, length, coordinates).ToList();
                     current -= (0, length);
                     break;
                 case 'L':
-                    coordinates = Coordinate.HorizontalRange(current, -1, length, coordinates).ToList();
+                    coordinates = current.HorizontalRange(-1, length, coordinates).ToList();
                     current -= (length, 0);
                     break;
             }

@@ -1,4 +1,4 @@
-using AoC2019.Util;
+using AoC2019.Util.Navigation;
 
 namespace TestPuzzles;
 
