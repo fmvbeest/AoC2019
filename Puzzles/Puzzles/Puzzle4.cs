@@ -7,12 +7,12 @@ public class Puzzle4 : PuzzleBase<IEnumerable<int>, int, int>
     
     public override int PartOne(IEnumerable<int> input)
     {
-        return input.Select(code => CheckCriteria(code)).Count(x => x);
+        return input.Count(code => CheckCriteria(code));
     }
 
     public override int PartTwo(IEnumerable<int> input)
     {
-        return input.Select(code => CheckCriteria(code, part:2)).Count(x => x);
+        return input.Count(code => CheckCriteria(code, part: 2));
     }
 
     public static bool CheckCriteria(int x, int part = 1)
