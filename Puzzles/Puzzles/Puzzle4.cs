@@ -12,29 +12,9 @@ public class Puzzle4 : PuzzleBase<string, int, int>
         var end = int.Parse(range[1]);
         var count = 0;
 
-        var criteriaMet = true;
-        
         for (var i = start; i <= end; i++)
         {
-            var digits = GetDigits2(i).Reverse().ToArray();
-            var increasing = true;
-            var adjacentDouble = false;
-            
-            for (var k = 0; k < digits.Length - 1; k++)
-            {
-                if (digits[k] > digits[k+1])
-                {
-                    increasing = false;
-                    break;
-                }
-
-                if (digits[k] == digits[k+1])
-                {
-                    adjacentDouble = true;
-                }
-            }
-
-            if (increasing && adjacentDouble)
+            if (CheckCriteria(i))
             {
                 count += 1;
             }
@@ -52,7 +32,7 @@ public class Puzzle4 : PuzzleBase<string, int, int>
 
         for (var i = start; i <= end; i++)
         {
-            if (CheckCriteria(i))
+            if (CheckCriteria(i, part:2))
             {
                 count += 1;
             }
@@ -61,52 +41,49 @@ public class Puzzle4 : PuzzleBase<string, int, int>
         return count;
     }
 
-    public bool CheckCriteria(int x)
+    public static bool CheckCriteria(int x, int part = 1)
     {
-        var digits = GetDigits2(x).Reverse().ToArray();
+        var digits = GetDigits(x).Reverse().ToArray();
         var increasing = true;
         var adjacentDouble = false;
         var adjacentDoublePair = -1;    
         
         for (var k = 0; k < digits.Length - 1; k++)
         {
-            if (digits[k] > digits[k+1])
-            {
-                increasing = false;
-                break;
-            }
+            if (digits[k] > digits[k+1]) { increasing = false; break; }
 
-            if (digits[k] == digits[k+1])
+            if (digits[k] != digits[k+1]) { continue; }
+
+            if (part == 1) { adjacentDouble = true; continue; }
+                
+            if (k == 0)
             {
-                if (k == 0)
+                adjacentDouble = true;
+                adjacentDoublePair = digits[k];
+                continue;
+            }
+                    
+            if (adjacentDouble)
+            {
+                if (digits[k-1] == digits[k] && digits[k] == adjacentDoublePair)
+                {
+                    adjacentDouble = false;
+                }
+            }
+            else
+            {
+                if (digits[k-1] != digits[k])
                 {
                     adjacentDouble = true;
                     adjacentDoublePair = digits[k];
-                    continue;
-                }
-                    
-                if (adjacentDouble)
-                {
-                    if (digits[k - 1] == digits[k] && digits[k] == adjacentDoublePair)
-                    {
-                        adjacentDouble = false;
-                    }
-                }
-                else
-                {
-                    if (digits[k-1] != digits[k])
-                    {
-                        adjacentDouble = true;
-                        adjacentDoublePair = digits[k];
-                    }
                 }
             }
         }
 
         return increasing && adjacentDouble;
     }
-    
-    public static IEnumerable<int> GetDigits2(int source)
+
+    private static IEnumerable<int> GetDigits(int source)
     {
         while (source > 0)
         {

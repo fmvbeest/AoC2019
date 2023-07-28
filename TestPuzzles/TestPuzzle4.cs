@@ -15,7 +15,7 @@ public class TestPuzzle4
     [Fact]
     public void TestPartTwoActual()
     {
-        Assert.Equal(0, _puzzle.PartTwo(_puzzle.Preprocess(_puzzleInput)));
+        Assert.Equal(686, _puzzle.PartTwo(_puzzle.Preprocess(_puzzleInput)));
     }
 
     [Theory]
@@ -23,12 +23,34 @@ public class TestPuzzle4
     [InlineData(111122)]
     [InlineData(123455)]
     [InlineData(344555)]
-    [InlineData(122333)]
-    public void MeetCritera(int x)
+    [InlineData(111111)]
+    [InlineData(123444)]
+    public void MeetPartOneCriteria(int x)
     {
-        Assert.True(_puzzle.CheckCriteria(x));
+        Assert.True(Puzzle4.CheckCriteria(x));
     }
     
+    [Theory]
+    
+    [InlineData(123789)]
+    [InlineData(223450)]
+    [InlineData(333440)]
+    public void DoNotMeetPartOneCriteria(int x)
+    {
+        Assert.False(Puzzle4.CheckCriteria(x));
+    }
+    
+    
+    [Theory]
+    [InlineData(112233)]
+    [InlineData(111122)]
+    [InlineData(123455)]
+    [InlineData(344555)]
+    public void MeetPartTwoCriteria(int x)
+    {
+        Assert.True(Puzzle4.CheckCriteria(x, part:2));
+    }
+
     [Theory]
     [InlineData(123444)]
     [InlineData(123789)]
@@ -36,8 +58,8 @@ public class TestPuzzle4
     [InlineData(333440)]
     [InlineData(111111)]
     [InlineData(222444)]
-    public void DoNotMeetCriteria(int x)
+    public void DoNotMeetPartTwoCriteria(int x)
     {
-        Assert.False(_puzzle.CheckCriteria(x));
+        Assert.False(Puzzle4.CheckCriteria(x, part:2));
     }
 }
