@@ -1,22 +1,18 @@
 ﻿namespace AoC2019.Puzzles;
 
-public class Puzzle4 : PuzzleBase<(int start, int count), int, int>
+public class Puzzle4 : PuzzleBase<IEnumerable<int>, int, int>
 {
     protected override string Filename => "Input/puzzle-input-04.txt";
     protected override string PuzzleTitle => "--- Day 4 Secure Container ---";
     
-    public override int PartOne((int start, int count) input)
+    public override int PartOne(IEnumerable<int> input)
     {
-        var seq = Enumerable.Range(input.start, input.count);
-
-        return seq.Select(code => CheckCriteria(code, part:1)).Count(x => x);
+        return input.Select(code => CheckCriteria(code)).Count(x => x);
     }
 
-    public override int PartTwo((int start, int count) input)
+    public override int PartTwo(IEnumerable<int> input)
     {
-        var seq = Enumerable.Range(input.start, input.count);
-
-        return seq.Select(code => CheckCriteria(code, part:2)).Count(x => x);
+        return input.Select(code => CheckCriteria(code, part:2)).Count(x => x);
     }
 
     public static bool CheckCriteria(int x, int part = 1)
@@ -70,11 +66,11 @@ public class Puzzle4 : PuzzleBase<(int start, int count), int, int>
         }
     }
 
-    public override (int, int) Preprocess(IPuzzleInput input, int part = 1)
+    public override IEnumerable<int> Preprocess(IPuzzleInput input, int part = 1)
     {
         var range = input.GetFirstLine().Split('-');
         var start = int.Parse(range[0]);
         var count = int.Parse(range[1]) - start + 1;
-        return (start, count);
+        return Enumerable.Range(start, count);
     }
 }
