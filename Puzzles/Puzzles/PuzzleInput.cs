@@ -11,11 +11,6 @@ public class PuzzleInput : IPuzzleInput
         _filename = filename;
     }
 
-    public PuzzleInput(IEnumerable<string> input)
-    {
-        _allLines = input.ToArray();
-    }
-
     public IEnumerable<string> GetAllLines()
     {
         return _allLines;
