@@ -69,15 +69,15 @@ public class Puzzle4 : PuzzleBase<string, int, int>
                 {
                     adjacentDouble = false;
                 }
+                continue;
             }
-            else
+            
+            if (digits[k-1] != digits[k])
             {
-                if (digits[k-1] != digits[k])
-                {
-                    adjacentDouble = true;
-                    adjacentDoublePair = digits[k];
-                }
+                adjacentDouble = true;
+                adjacentDoublePair = digits[k];
             }
+            
         }
 
         return increasing && adjacentDouble;
