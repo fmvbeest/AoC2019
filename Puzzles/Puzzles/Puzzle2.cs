@@ -44,8 +44,8 @@ public class Puzzle2 : PuzzleBase<IEnumerable<int>, int, int>
     {
         return instruction.Opcode switch
         {
-            Opcode.Addition => program[instruction.InputAddress1.Value] + program[instruction.InputAddress2.Value],
-            Opcode.Multiplication => program[instruction.InputAddress1.Value] * program[instruction.InputAddress2.Value],
+            Opcode.Addition => program[instruction.Parameter1.Value] + program[instruction.Parameter2.Value],
+            Opcode.Multiplication => program[instruction.Parameter1.Value] * program[instruction.Parameter2.Value],
             Opcode.Termination => throw new TerminationException(),
             Opcode.Input => throw new UnknownInstructionException(),
             Opcode.Output => throw new UnknownInstructionException(),
@@ -67,7 +67,7 @@ public class Puzzle2 : PuzzleBase<IEnumerable<int>, int, int>
                         new Parameter{ Value = program[i + 2]},
                         new Parameter{ Value = program[i + 3]}
                         );
-                program[instruction.OutputAddress.Value] = CalculateOutput(program, instruction);
+                program[instruction.Parameter3.Value] = CalculateOutput(program, instruction);
             }
             catch (Exception e)
             {
