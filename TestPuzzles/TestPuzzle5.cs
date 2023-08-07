@@ -8,21 +8,9 @@ public class TestPuzzle5
     private readonly Puzzle5 _puzzle = new();
 
     [Fact]
-    public void TestPartOneSample()
-    {
-        Assert.Equal(0, _puzzle.PartOne(_puzzle.Preprocess(_testInput)));
-    }
-    
-    [Fact]
     public void TestPartOneActual()
     {
-        Assert.Equal(0, _puzzle.PartOne(_puzzle.Preprocess(_puzzleInput)));
-    }
-    
-    [Fact]
-    public void TestPartTwoSample()
-    {
-        Assert.Equal(0, _puzzle.PartTwo(_puzzle.Preprocess(_testInput)));
+        Assert.Equal(14522484, _puzzle.PartOne(_puzzle.Preprocess(_puzzleInput)));
     }
     
     [Fact]

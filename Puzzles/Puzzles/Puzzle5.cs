@@ -14,6 +14,7 @@ public class Puzzle5 : PuzzleBase<IEnumerable<int>, int, int>
         var program = input.ToArray();
 
         var i = 0;
+        var output = -1;
         
         while (true)
         {
@@ -38,13 +39,9 @@ public class Puzzle5 : PuzzleBase<IEnumerable<int>, int, int>
                     instruction.Parameter1.Value = program[i + 1];
                 }
                 
-                var output = CalculateOutput(program, instruction);
+                output = CalculateOutput(program, instruction);
 
-                if (instruction.Opcode == Opcode.Output)
-                {
-                    Console.WriteLine($"Output: {output}");
-                }
-                else
+                if (instruction.Opcode != Opcode.Output)
                 {
                     program[instruction.Parameter3.Value] = output;
                 }
@@ -63,7 +60,7 @@ public class Puzzle5 : PuzzleBase<IEnumerable<int>, int, int>
             
         }
 
-        return 0;
+        return output;
     }
 
     private IntcodeInstruction ParseInstruction(int instructionOpcode)
