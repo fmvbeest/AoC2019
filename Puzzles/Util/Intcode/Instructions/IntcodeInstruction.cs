@@ -4,10 +4,20 @@ namespace AoC2019.Util.Intcode.Instructions;
 
 public class IntcodeInstruction
 {
+    public IntcodeInstruction(Opcode opcode, Parameter inputAddress1, Parameter inputAddress2, Parameter outputAddress)
+    {
+        Opcode = opcode;
+        InputAddress1 = inputAddress1;
+        InputAddress2 = inputAddress2;
+        OutputAddress = outputAddress;
+    }
+
     public Opcode Opcode { get; set; }
 
     /* still used in Puzzle 2. remove these after refactor */
-    public int AddressInput1 { get; set; }
-    public int AddressInput2 { get; set; }
-    public int AddressOutput { get; set; }
+    public Parameter InputAddress1 { get; set; }
+    public Parameter InputAddress2 { get; set; }
+    public Parameter OutputAddress { get; set; }
+    
+    
 }
