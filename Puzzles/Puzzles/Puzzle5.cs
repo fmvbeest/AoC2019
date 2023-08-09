@@ -12,7 +12,8 @@ public class Puzzle5 : PuzzleBase<IEnumerable<int>, int, int>
     public override int PartOne(IEnumerable<int> input)
     {
         var program = input.ToArray();
-
+        const int inputValue = 1;
+        
         var i = 0;
         var output = -1;
         
@@ -21,23 +22,8 @@ public class Puzzle5 : PuzzleBase<IEnumerable<int>, int, int>
             try
             {
                 var instruction = ParseInstruction(program[i]);
-                if (instruction.Opcode == Opcode.Input)
-                {
-                    instruction.Parameter1.Value = 1;
-                    instruction.Parameter3.Value = program[i + 1];
-                }
-
-                if (instruction.Opcode is Opcode.Addition or Opcode.Multiplication)
-                {
-                    instruction.Parameter1.Value = program[i + 1];
-                    instruction.Parameter2.Value = program[i + 2];
-                    instruction.Parameter3.Value = program[i + 3];
-                }
                 
-                if (instruction.Opcode == Opcode.Output)
-                {
-                    instruction.Parameter1.Value = program[i + 1];
-                }
+                instruction = FillParameters(program, instruction, i, inputValue);
                 
                 output = CalculateOutput(program, instruction, out var jump);
 

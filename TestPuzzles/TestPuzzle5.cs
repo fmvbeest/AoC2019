@@ -3,7 +3,6 @@ using AoC2019.Puzzles;
 
 public class TestPuzzle5
 {
-    private readonly PuzzleInput _testInput = new("Input/test-input-05.txt");
     private readonly PuzzleInput _puzzleInput = new("Input/puzzle-input-05.txt");
     private readonly Puzzle5 _puzzle = new();
 
