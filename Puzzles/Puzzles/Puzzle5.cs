@@ -39,7 +39,7 @@ public class Puzzle5 : PuzzleBase<IEnumerable<int>, int, int>
                     instruction.Parameter1.Value = program[i + 1];
                 }
                 
-                output = CalculateOutput(program, instruction);
+                output = CalculateOutput(program, instruction, out var jump);
 
                 if (instruction.Opcode != Opcode.Output)
                 {
@@ -77,9 +77,14 @@ public class Puzzle5 : PuzzleBase<IEnumerable<int>, int, int>
 
                 instruction = FillParameters(program, instruction, i, inputValue);
                 
-                output = CalculateOutput(program, instruction);
+                output = CalculateOutput(program, instruction, out var jump);
 
-                if (instruction.Opcode != Opcode.Output)
+                if (jump)
+                {
+                    i = output;
+                    continue;
+                }
+                if (instruction.Opcode != Opcode.Output && instruction.Opcode != Opcode.JumpIfFalse && instruction.Opcode != Opcode.JumpIfTrue)
                 {
                     program[instruction.Parameter3.Value] = output;
                 }
@@ -135,8 +140,10 @@ public class Puzzle5 : PuzzleBase<IEnumerable<int>, int, int>
         }
     }
 
-    private static int CalculateOutput(int[] program, IntcodeInstruction instruction)
+    private static int CalculateOutput(int[] program, IntcodeInstruction instruction, out bool jump)
     {
+        jump = false;
+        
         if (instruction.Opcode == Opcode.Addition)
         {
             return GetParameterValue(program, instruction.Parameter1) +
@@ -172,6 +179,22 @@ public class Puzzle5 : PuzzleBase<IEnumerable<int>, int, int>
             var y = GetParameterValue(program, instruction.Parameter2);
             return x == y ? 1 : 0;
         }
+        
+        if (instruction.Opcode == Opcode.JumpIfTrue)
+        {
+            var x = GetParameterValue(program, instruction.Parameter1);
+            var y = GetParameterValue(program, instruction.Parameter2);
+            jump = x != 0;
+            return jump ? y : 0;
+        }
+        
+        if (instruction.Opcode == Opcode.JumpIfFalse)
+        {
+            var x = GetParameterValue(program, instruction.Parameter1);
+            var y = GetParameterValue(program, instruction.Parameter2);
+            jump = x == 0;
+            return jump ? y : 0;
+        }
 
         if (instruction.Opcode == Opcode.Termination)
         {
@@ -201,6 +224,10 @@ public class Puzzle5 : PuzzleBase<IEnumerable<int>, int, int>
                 break;
             case Opcode.Output:
                 instruction.Parameter1.Value = program[pointer + 1];
+                break;
+            case Opcode.JumpIfTrue or Opcode.JumpIfFalse:
+                instruction.Parameter1.Value = program[pointer + 1];
+                instruction.Parameter2.Value = program[pointer + 2];
                 break;
         }
 

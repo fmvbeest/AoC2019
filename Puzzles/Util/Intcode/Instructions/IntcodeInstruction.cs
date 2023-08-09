@@ -54,6 +54,8 @@ public class IntcodeInstruction
             {
                 case Opcode.Addition or Opcode.Multiplication or Opcode.LessThan or Opcode.Equals:
                     return 4;
+                case Opcode.JumpIfFalse or Opcode.JumpIfTrue:
+                    return 3;
                 case Opcode.Input or Opcode.Output:
                     return 2;
                 case Opcode.Termination:

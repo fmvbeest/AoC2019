@@ -16,7 +16,7 @@ public class TestPuzzle5
     [Fact]
     public void TestPartTwoActual()
     {
-        Assert.Equal(0, _puzzle.PartTwo(_puzzle.Preprocess(_puzzleInput)));
+        Assert.Equal(4655956, _puzzle.PartTwo(_puzzle.Preprocess(_puzzleInput)));
     }
     
     [Fact]
@@ -105,6 +105,22 @@ public class TestPuzzle5
     {
         const int compare = 8;
         var input = new[] { 3, 3, 1107, -1, compare, 3, 4, 3, 99 };
+        
+        Assert.Equal(1, _puzzle.PartTwo(input));
+    }
+    
+    [Fact]
+    public void TestPartTwoJumpZeroInput()
+    {
+        var input = new[] { 3, 12, 6, 12, 15, 1, 13, 14, 13, 4, 13, 99, -1, 0, 1, 9 };
+        
+        Assert.Equal(1, _puzzle.PartTwo(input));
+    }
+    
+    [Fact]
+    public void TestPartTwoJumpZeroInput2()
+    {
+        var input = new[] { 3, 3, 1105, -1, 9, 1101, 0, 0, 12, 4, 12, 99, 1 };
         
         Assert.Equal(1, _puzzle.PartTwo(input));
     }
