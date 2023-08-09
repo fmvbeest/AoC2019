@@ -3,7 +3,7 @@ using AoC2019.Puzzles;
 
 public class TestPuzzle6
 {
-    private readonly PuzzleInput _testInput = new("Input/test-input-06.txt");
+    private PuzzleInput _testInput = new("Input/test-input-06.txt");
     private readonly PuzzleInput _puzzleInput = new("Input/puzzle-input-06.txt");
     private readonly Puzzle6 _puzzle = new();
 
@@ -22,12 +22,13 @@ public class TestPuzzle6
     [Fact]
     public void TestPartTwoSample()
     {
-        Assert.Equal(0, _puzzle.PartTwo(_puzzle.Preprocess(_testInput)));
+        _testInput = new PuzzleInput("Input/test-input-06-b.txt");
+        Assert.Equal(4, _puzzle.PartTwo(_puzzle.Preprocess(_testInput)));
     }
     
     [Fact]
     public void TestPartTwoActual()
     {
-        Assert.Equal(0, _puzzle.PartTwo(_puzzle.Preprocess(_puzzleInput)));
+        Assert.Equal(274, _puzzle.PartTwo(_puzzle.Preprocess(_puzzleInput)));
     }
 }

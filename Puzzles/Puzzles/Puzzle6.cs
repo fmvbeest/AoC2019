@@ -1,4 +1,6 @@
-﻿namespace AoC2019.Puzzles;
+﻿using AoC2019.Util;
+
+namespace AoC2019.Puzzles;
 
 public class Puzzle6 : PuzzleBase<IEnumerable<(string, string)>, int, int>
 {
@@ -7,25 +9,31 @@ public class Puzzle6 : PuzzleBase<IEnumerable<(string, string)>, int, int>
     
     public override int PartOne(IEnumerable<(string, string)> input)
     {
-        var x = new Dictionary<string, string>();
+        var dictionary = input.ToDictionary(keySelector: tuple => tuple.Item2, elementSelector: tuple => tuple.Item1);
 
-        foreach (var (a, b) in input)
-        {
-            x.Add(b, a);
-        }
-
-        var count = 0;
-        foreach (var key in x.Keys)
-        {
-            count += StepsToCOM(x, key);
-        }
-        
-        return count;
+        return dictionary.Keys.Sum(key => StepsToCOM(dictionary, key));
     }
 
     public override int PartTwo(IEnumerable<(string, string)> input)
     {
-        return 0;
+        var edgeLabels = input.ToArray();
+        
+        var labels = CreateMapping(edgeLabels);
+        
+        var graph = new Graph(labels.Count);
+        
+        foreach (var (u, v) in edgeLabels)
+        {
+            graph.AddEdge(labels[u], labels[v]);
+        }
+
+        var you = graph.Neighbours(labels["YOU"]).FirstOrDefault();
+        
+        var san = graph.Neighbours(labels["SAN"]).FirstOrDefault();
+        
+        var distances = graph.ShortestPath(you, san);
+        
+        return distances[san];
     }
 
     private int StepsToCOM(Dictionary<string, string> orbits, string key)
@@ -39,6 +47,27 @@ public class Puzzle6 : PuzzleBase<IEnumerable<(string, string)>, int, int>
         }
 
         return i;
+    }
+
+    private Dictionary<string, int> CreateMapping(IEnumerable<(string, string)> input)
+    {
+        var nodes = new HashSet<string>();
+        var labels = new Dictionary<string, int>();
+        
+        foreach (var edge in input)
+        {
+            nodes.Add(edge.Item1);
+            nodes.Add(edge.Item2);
+        }
+
+        var i = 0;
+        foreach (var node in nodes)
+        {
+            labels.Add(node, i);
+            i++;
+        }
+
+        return labels;
     }
 
     public override IEnumerable<(string, string)> Preprocess(IPuzzleInput input, int part = 1)
