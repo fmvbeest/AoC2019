@@ -27,7 +27,7 @@ public class Puzzle5 : PuzzleBase<IEnumerable<int>, int, int>
                     instruction.Parameter3.Value = program[i + 1];
                 }
 
-                if (instruction.Opcode == Opcode.Addition || instruction.Opcode == Opcode.Multiplication)
+                if (instruction.Opcode is Opcode.Addition or Opcode.Multiplication)
                 {
                     instruction.Parameter1.Value = program[i + 1];
                     instruction.Parameter2.Value = program[i + 2];
@@ -56,8 +56,44 @@ public class Puzzle5 : PuzzleBase<IEnumerable<int>, int, int>
                 }
                 throw;
             }
-            
-            
+        }
+
+        return output;
+    }
+
+    public override int PartTwo(IEnumerable<int> input)
+    {
+        var program = input.ToArray();
+        const int inputValue = 5;
+
+        var i = 0;
+        var output = -1;
+        
+        while (true)
+        {
+            try
+            {
+                var instruction = ParseInstruction(program[i]);
+
+                instruction = FillParameters(program, instruction, i, inputValue);
+                
+                output = CalculateOutput(program, instruction);
+
+                if (instruction.Opcode != Opcode.Output)
+                {
+                    program[instruction.Parameter3.Value] = output;
+                }
+                
+                i += instruction.InstructionSize;
+            }
+            catch (Exception e)
+            {
+                if (e is TerminationException or UnknownInstructionException)
+                {
+                    break;
+                }
+                throw;
+            }
         }
 
         return output;
@@ -122,6 +158,20 @@ public class Puzzle5 : PuzzleBase<IEnumerable<int>, int, int>
         {
             return GetParameterValue(program, instruction.Parameter1);
         }
+        
+        if (instruction.Opcode == Opcode.LessThan)
+        {
+            var x = GetParameterValue(program, instruction.Parameter1);
+            var y = GetParameterValue(program, instruction.Parameter2);
+            return x < y ? 1 : 0;
+        }
+        
+        if (instruction.Opcode == Opcode.Equals)
+        {
+            var x = GetParameterValue(program, instruction.Parameter1);
+            var y = GetParameterValue(program, instruction.Parameter2);
+            return x == y ? 1 : 0;
+        }
 
         if (instruction.Opcode == Opcode.Termination)
         {
@@ -135,10 +185,26 @@ public class Puzzle5 : PuzzleBase<IEnumerable<int>, int, int>
     {
         return parameter.ParameterMode == ParameterMode.Immediate ? parameter.Value : program[parameter.Value];
     }
-
-    public override int PartTwo(IEnumerable<int> input)
+    
+    private IntcodeInstruction FillParameters(int[] program, IntcodeInstruction instruction, int pointer, int inputValue)
     {
-        return 0;
+        switch (instruction.Opcode)
+        {
+            case Opcode.Input:
+                instruction.Parameter1.Value = inputValue;
+                instruction.Parameter3.Value = program[pointer + 1];
+                break;
+            case Opcode.Addition or Opcode.Multiplication or Opcode.LessThan or Opcode.Equals:
+                instruction.Parameter1.Value = program[pointer + 1];
+                instruction.Parameter2.Value = program[pointer + 2];
+                instruction.Parameter3.Value = program[pointer + 3];
+                break;
+            case Opcode.Output:
+                instruction.Parameter1.Value = program[pointer + 1];
+                break;
+        }
+
+        return instruction;
     }
 
     public override IEnumerable<int> Preprocess(IPuzzleInput input, int part = 1)

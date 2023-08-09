@@ -18,4 +18,94 @@ public class TestPuzzle5
     {
         Assert.Equal(0, _puzzle.PartTwo(_puzzle.Preprocess(_puzzleInput)));
     }
+    
+    [Fact]
+    public void TestPartTwoFiveEqualsThreePositionMode()
+    {
+        const int compare = 3;
+        var input = new [] { 3, 9, 8, 9, 10, 9, 4, 9, 99, -1, compare };
+        
+        Assert.Equal(0, _puzzle.PartTwo(input));
+    }
+    
+    [Fact]
+    public void TestPartTwoFiveEqualsFivePositionMode()
+    {
+        const int compare = 5;
+        var input = new [] { 3, 9, 8, 9, 10, 9, 4, 9, 99, -1, compare };
+        
+        Assert.Equal(1, _puzzle.PartTwo(input));
+    }
+    
+    [Fact]
+    public void TestPartTwoFiveEqualsThreeImmediateMode()
+    {
+        const int compare = 3;
+        var input = new[] { 3, 3, 1108, -1, compare, 3, 4, 3, 99 };
+        
+        Assert.Equal(0, _puzzle.PartTwo(input));
+    }
+    
+    [Fact]
+    public void TestPartTwoFiveEqualsFiveImmediateMode()
+    {
+        const int compare = 5;
+        var input = new[] { 3, 3, 1108, -1, compare, 3, 4, 3, 99 };
+        
+        Assert.Equal(1, _puzzle.PartTwo(input));
+    }
+    
+    [Fact]
+    public void TestPartTwoFiveLessThanThreePositionMode()
+    {
+        const int compare = 3;
+        var input = new [] { 3, 9, 7, 9, 10, 9, 4, 9, 99, -1, compare };
+        
+        Assert.Equal(0, _puzzle.PartTwo(input));
+    }
+    
+    [Fact]
+    public void TestPartTwoFiveLessThanFivePositionMode()
+    {
+        const int compare = 5;
+        var input = new [] { 3, 9, 7, 9, 10, 9, 4, 9, 99, -1, compare };
+        
+        Assert.Equal(0, _puzzle.PartTwo(input));
+    }
+    
+    [Fact]
+    public void TestPartTwoFiveLessThanEightPositionMode()
+    {
+        const int compare = 8;
+        var input = new [] { 3, 9, 7, 9, 10, 9, 4, 9, 99, -1, compare };
+        
+        Assert.Equal(1, _puzzle.PartTwo(input));
+    }
+    
+    [Fact]
+    public void TestPartTwoFiveLessThanThreeImmediateMode()
+    {
+        const int compare = 3;
+        var input = new[] { 3, 3, 1107, -1, compare, 3, 4, 3, 99 };
+        
+        Assert.Equal(0, _puzzle.PartTwo(input));
+    }
+    
+    [Fact]
+    public void TestPartTwoFiveLessThanFiveImmediateMode()
+    {
+        const int compare = 5;
+        var input = new[] { 3, 3, 1107, -1, compare, 3, 4, 3, 99 };
+        
+        Assert.Equal(0, _puzzle.PartTwo(input));
+    }
+    
+    [Fact]
+    public void TestPartTwoFiveLessThanEightImmediateMode()
+    {
+        const int compare = 8;
+        var input = new[] { 3, 3, 1107, -1, compare, 3, 4, 3, 99 };
+        
+        Assert.Equal(1, _puzzle.PartTwo(input));
+    }
 }

@@ -52,7 +52,7 @@ public class IntcodeInstruction
         {
             switch (Opcode)
             {
-                case Opcode.Addition or Opcode.Multiplication:
+                case Opcode.Addition or Opcode.Multiplication or Opcode.LessThan or Opcode.Equals:
                     return 4;
                 case Opcode.Input or Opcode.Output:
                     return 2;
