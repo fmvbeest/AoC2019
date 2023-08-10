@@ -1,5 +1,5 @@
-﻿using AoC2019.Util;
-using AoC2019.Util.Exceptions;
+﻿using AoC2019.Util.Exceptions;
+using AoC2019.Util.ExtensionMethods;
 using AoC2019.Util.Intcode.Enums;
 using AoC2019.Util.Intcode.Instructions;
 

@@ -1,4 +1,4 @@
-﻿namespace AoC2019.Util;
+﻿namespace AoC2019.Util.ExtensionMethods;
 
 public static class PermutationExtensions
 {
