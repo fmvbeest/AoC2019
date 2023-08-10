@@ -10,7 +10,7 @@ public class OutputInstruction : IOInstruction
     
     public override void Run(int[] memory)
     {
-        throw new NotImplementedException();
+        ResultValue = GetParameterValue(memory, Parameter1);
     }
 
     public override int Value()

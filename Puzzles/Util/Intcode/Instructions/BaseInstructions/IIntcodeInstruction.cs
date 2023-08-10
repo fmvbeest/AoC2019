@@ -27,4 +27,10 @@ public interface IIntcodeInstruction
     /// </summary>
     /// <returns>Computed value after Run()</returns>
     public int Value();
+    
+    /// <summary>
+    /// Returns the memory address the output should be written to
+    /// </summary>
+    /// <returns>Computed value after Run()</returns>
+    public int OutputAddress();
 }

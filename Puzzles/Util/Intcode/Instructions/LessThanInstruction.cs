@@ -10,11 +10,11 @@ public class LessThanInstruction : CompareInstruction
     
     public override void Run(int[] memory)
     {
-        throw new NotImplementedException();
+        ResultValue = GetParameterValue(memory, Parameter1) < GetParameterValue(memory, Parameter2) ? 1 : 0;
     }
 
     public override int Value()
     {
-        throw new NotImplementedException();
+        return ResultValue;
     }
 }

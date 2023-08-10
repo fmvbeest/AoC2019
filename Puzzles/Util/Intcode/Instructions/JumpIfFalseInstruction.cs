@@ -10,11 +10,15 @@ public class JumpIfFalseInstruction : JumpInstruction
     
     public override void Run(int[] memory)
     {
-        throw new NotImplementedException();
+        Jump = 0 == GetParameterValue(memory, Parameter1);
+        if (Jump)
+        {
+            ResultValue = GetParameterValue(memory, Parameter2);            
+        }
     }
 
     public override int Value()
     {
-        throw new NotImplementedException();
+        return ResultValue;
     }
 }

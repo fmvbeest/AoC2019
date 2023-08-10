@@ -26,7 +26,12 @@ public abstract class BaseInstruction : IIntcodeInstruction
 
     public abstract int Value();
     
-    protected int GetParameterValue(int[] memory, Parameter parameter)
+    public int OutputAddress()
+    {
+        return Parameter3.Value;
+    }
+
+    protected static int GetParameterValue(int[] memory, Parameter parameter)
     {
         return parameter.ParameterMode == ParameterMode.Immediate ? parameter.Value : memory[parameter.Value];
     }
