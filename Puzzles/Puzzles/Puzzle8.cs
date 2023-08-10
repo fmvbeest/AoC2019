@@ -1,4 +1,5 @@
 ﻿using AoC2019.Util;
+using AoC2019.Util.Enums;
 
 namespace AoC2019.Puzzles;
 
@@ -37,11 +38,11 @@ public class Puzzle8 : PuzzleBase<IEnumerable<IEnumerable<int>>, int, int>
 
         for (var i = 0; i < image.Size; i++)
         {
-            var pixel = 2;
+            var pixel = PixelValue.Transparent;
             foreach (var layer in layers)
             {
                 pixel = layer.GetValue(i);
-                if (pixel == 0 || pixel == 1)
+                if (pixel is PixelValue.Black or PixelValue.White)
                 {
                     break;
                 }
@@ -49,21 +50,19 @@ public class Puzzle8 : PuzzleBase<IEnumerable<IEnumerable<int>>, int, int>
             image.SetValue(pixel, i);
         }
 
-        var x = image.GetLayer().ToArray();
-
-        PrintImage(x);
+        PrintImage(image.GetLayer().ToArray());
         
         return 0;
     }
 
     private static void PrintImage(int[][] image)
     {
-        for (var i = 0; i < image.Length; i++)
+        foreach (var row in image)
         {
             Console.WriteLine();
-            for (var j = 0; j < image[i].Length; j++)
+            foreach (var pixel in row)
             {
-                Console.Write(image[i][j] == 0 ? " " : "#");                
+                Console.Write((PixelValue)pixel == PixelValue.Black ? " " : "#");
             }
         }
         Console.WriteLine();

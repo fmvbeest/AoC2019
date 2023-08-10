@@ -1,4 +1,6 @@
-﻿namespace AoC2019.Util;
+﻿using AoC2019.Util.Enums;
+
+namespace AoC2019.Util;
 
 public class ImageLayer
 {
@@ -26,25 +28,20 @@ public class ImageLayer
     {
         return _values.Count(x => x == value);
     }
-
-    public void SetValue(int value, int x, int y)
-    {
-        _values[x * y - 1] = value;
-    }
     
     public void SetValue(int value, int index)
     {
         _values[index] = value;
     }
-
-    public int GetValue(int x, int y)
-    {
-        return _values[x * y - 1];
-    }
     
-    public int GetValue(int index)
+    public void SetValue(PixelValue value, int index)
     {
-        return _values[index];
+        _values[index] = (int)value;
+    }
+
+    public PixelValue GetValue(int index)
+    {
+        return (PixelValue)_values[index];
     }
 
     public IEnumerable<int[]> GetLayer()
