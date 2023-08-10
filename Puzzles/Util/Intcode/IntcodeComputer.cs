@@ -1,6 +1,4 @@
-﻿using AoC2019.Util.Intcode.Enums;
-using AoC2019.Util.Intcode.Instructions.BaseInstructions;
-using AoC2019.Util.Intcode.Parameters;
+﻿using AoC2019.Util.Intcode.Instructions.BaseInstructions;
 
 namespace AoC2019.Util.Intcode;
 
@@ -33,15 +31,9 @@ public class IntcodeComputer
     {
         instruction.Run(_program);
     }
-    
 
     public int GetOutput()
     {
         return _program[_instructionPointer];
-    }
-    
-    private int GetParameterValue(Parameter parameter)
-    {
-        return parameter.ParameterMode == ParameterMode.Immediate ? parameter.Value : _program[parameter.Value];
     }
 }

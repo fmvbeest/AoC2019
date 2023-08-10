@@ -9,6 +9,8 @@ public abstract class BaseInstruction : IIntcodeInstruction
     public Parameter Parameter1 { get; set; }
     public Parameter Parameter2 { get; set; }
     public Parameter Parameter3 { get; set; }
+
+    protected int ResultValue;
     
     protected BaseInstruction(Opcode opcode, (int m1, int m2, int m3) parameterModes)
     {
@@ -17,10 +19,15 @@ public abstract class BaseInstruction : IIntcodeInstruction
         Parameter2 = new Parameter(parameterModes.m2);
         Parameter3 = new Parameter(parameterModes.m3);
     }
-    
+
     public abstract void Run(int[] memory);
 
     public abstract int Size();
 
     public abstract int Value();
+    
+    protected int GetParameterValue(int[] memory, Parameter parameter)
+    {
+        return parameter.ParameterMode == ParameterMode.Immediate ? parameter.Value : memory[parameter.Value];
+    }
 }
