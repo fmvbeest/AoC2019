@@ -4,8 +4,8 @@ namespace AoC2019.Util;
 
 public class ImageLayer
 {
-    private int _width;
-    private int _height;
+    private readonly int _width;
+    private readonly int _height;
     private readonly int[] _values;
 
     public int Size => _values.Length;
@@ -28,12 +28,7 @@ public class ImageLayer
     {
         return _values.Count(x => x == value);
     }
-    
-    public void SetValue(int value, int index)
-    {
-        _values[index] = value;
-    }
-    
+
     public void SetValue(PixelValue value, int index)
     {
         _values[index] = (int)value;
