@@ -1,10 +1,11 @@
 ﻿using AoC2019.Util.Intcode.Enums;
+using AoC2019.Util.Intcode.Parameters;
 
 namespace AoC2019.Util.Intcode.Instructions;
 
-public class IntcodeInstruction
+public class Instruction
 {
-    public IntcodeInstruction(Opcode opcode, Parameter parameter1, Parameter parameter2, Parameter parameter3)
+    public Instruction(Opcode opcode, Parameter parameter1, Parameter parameter2, Parameter parameter3)
     {
         Opcode = opcode;
         Parameter1 = parameter1;
@@ -13,7 +14,7 @@ public class IntcodeInstruction
         InstructionSize = 4;
     }
     
-    public IntcodeInstruction(Opcode opcode, Parameter parameter1)
+    public Instruction(Opcode opcode, Parameter parameter1)
     {
         Opcode = opcode;
         Parameter1 = parameter1;
@@ -22,7 +23,7 @@ public class IntcodeInstruction
         Parameter3 = new Parameter();
     }
     
-    public IntcodeInstruction(int opcode, int[] parametermodes)
+    public Instruction(int opcode, int[] parametermodes)
     {
         Parameter1 = new Parameter();
         Parameter2 = new Parameter();
@@ -31,7 +32,7 @@ public class IntcodeInstruction
         InitParameterMode(parametermodes);
     }
     
-    public IntcodeInstruction()
+    public Instruction()
     {
         Parameter1 = new Parameter();
         Parameter2 = new Parameter();

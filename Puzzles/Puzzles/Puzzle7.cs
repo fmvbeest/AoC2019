@@ -2,6 +2,7 @@
 using AoC2019.Util.ExtensionMethods;
 using AoC2019.Util.Intcode.Enums;
 using AoC2019.Util.Intcode.Instructions;
+using AoC2019.Util.Intcode.Parameters;
 
 namespace AoC2019.Puzzles;
 
@@ -91,7 +92,7 @@ public class Puzzle7 : PuzzleBase<IEnumerable<int>, int, int>
         return output;
     }
     
-    private IntcodeInstruction ParseInstruction(int instructionOpcode)
+    private Instruction ParseInstruction(int instructionOpcode)
     {
         var parameterModes = new[] { 0, 0, 0 };
         
@@ -99,7 +100,7 @@ public class Puzzle7 : PuzzleBase<IEnumerable<int>, int, int>
 
         if (digits.Length <= 2)
         {
-            return new IntcodeInstruction(instructionOpcode, parameterModes);
+            return new Instruction(instructionOpcode, parameterModes);
         }
         
         var opcode = int.Parse($"{digits[1]}{digits[0]}");
@@ -113,7 +114,7 @@ public class Puzzle7 : PuzzleBase<IEnumerable<int>, int, int>
             parameterModes[i] = modes[i];
         }
 
-        return new IntcodeInstruction(opcode, parameterModes);
+        return new Instruction(opcode, parameterModes);
     }
 
     
@@ -127,7 +128,7 @@ public class Puzzle7 : PuzzleBase<IEnumerable<int>, int, int>
         }
     }
 
-    private static int CalculateOutput(int[] program, IntcodeInstruction instruction, out bool jump)
+    private static int CalculateOutput(int[] program, Instruction instruction, out bool jump)
     {
         jump = false;
         
@@ -196,7 +197,7 @@ public class Puzzle7 : PuzzleBase<IEnumerable<int>, int, int>
         return parameter.ParameterMode == ParameterMode.Immediate ? parameter.Value : program[parameter.Value];
     }
     
-    private IntcodeInstruction FillParameters(int[] program, IntcodeInstruction instruction, int pointer, int inputValue)
+    private Instruction FillParameters(int[] program, Instruction instruction, int pointer, int inputValue)
     {
         switch (instruction.Opcode)
         {

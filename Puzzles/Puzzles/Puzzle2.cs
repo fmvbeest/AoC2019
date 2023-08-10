@@ -3,6 +3,7 @@ using AoC2019.Util.Exceptions;
 using AoC2019.Util.Intcode;
 using AoC2019.Util.Intcode.Enums;
 using AoC2019.Util.Intcode.Instructions;
+using AoC2019.Util.Intcode.Parameters;
 
 namespace AoC2019.Puzzles;
 
@@ -40,7 +41,7 @@ public class Puzzle2 : PuzzleBase<IEnumerable<int>, int, int>
         return 100 * noun + verb;
     }
 
-    private static int CalculateOutput(int[] program, IntcodeInstruction instruction)
+    private static int CalculateOutput(int[] program, Instruction instruction)
     {
         return instruction.Opcode switch
         {
@@ -62,7 +63,7 @@ public class Puzzle2 : PuzzleBase<IEnumerable<int>, int, int>
         {
             try
             {
-                var instruction = new IntcodeInstruction((Opcode)program[i],
+                var instruction = new Instruction((Opcode)program[i],
                         new Parameter{ Value = program[i + 1]},
                         new Parameter{ Value = program[i + 2]},
                         new Parameter{ Value = program[i + 3]}
