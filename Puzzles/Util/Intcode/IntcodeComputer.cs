@@ -1,5 +1,4 @@
 ﻿using AoC2019.Util.Intcode.Enums;
-using AoC2019.Util.Intcode.Instructions;
 using AoC2019.Util.Intcode.Instructions.BaseInstructions;
 using AoC2019.Util.Intcode.Parameters;
 

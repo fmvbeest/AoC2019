@@ -63,6 +63,4 @@ public class InstructionParser
             yield return digit;
         }
     }
-    
-    
 }
