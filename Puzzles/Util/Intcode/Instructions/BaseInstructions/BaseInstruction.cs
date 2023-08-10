@@ -5,11 +5,10 @@ namespace AoC2019.Util.Intcode.Instructions.BaseInstructions;
 
 public abstract class BaseInstruction : IIntcodeInstruction
 {
+    public Opcode Opcode { get; set; }
     public Parameter Parameter1 { get; set; }
     public Parameter Parameter2 { get; set; }
     public Parameter Parameter3 { get; set; }
-    
-    public Opcode Opcode { get; set; }
     
     protected BaseInstruction(Opcode opcode, (int m1, int m2, int m3) parameterModes)
     {
@@ -19,7 +18,7 @@ public abstract class BaseInstruction : IIntcodeInstruction
         Parameter3 = new Parameter(parameterModes.m3);
     }
     
-    public abstract void Run();
+    public abstract void Run(int[] memory);
 
     public abstract int Size();
 

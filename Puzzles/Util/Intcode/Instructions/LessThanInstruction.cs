@@ -8,7 +8,7 @@ public class LessThanInstruction : CompareInstruction
     public LessThanInstruction(Opcode opcode, (int m1, int m2, int m3) parameterModes) 
         : base(opcode, parameterModes) { }
     
-    public override void Run()
+    public override void Run(int[] memory)
     {
         throw new NotImplementedException();
     }

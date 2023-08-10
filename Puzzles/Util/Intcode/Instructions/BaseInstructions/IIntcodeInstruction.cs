@@ -1,9 +1,12 @@
-﻿using AoC2019.Util.Intcode.Parameters;
+﻿using AoC2019.Util.Intcode.Enums;
+using AoC2019.Util.Intcode.Parameters;
 
 namespace AoC2019.Util.Intcode.Instructions.BaseInstructions;
 
 public interface IIntcodeInstruction
 {
+    public Opcode Opcode { get; set; }
+    
     public Parameter Parameter1 { get; set; }
     public Parameter Parameter2 { get; set; }
     public Parameter Parameter3 { get; set; }
@@ -11,7 +14,7 @@ public interface IIntcodeInstruction
     /// <summary>
     /// Run the instruction. Computer value is stored internally. Retrieve using Value().
     /// </summary>
-    public void Run();
+    public void Run(int[] memory);
 
     /// <summary>
     /// Instruction Size, which is Opcode + number of parameters used.

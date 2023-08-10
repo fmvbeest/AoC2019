@@ -32,7 +32,7 @@ public class IntcodeComputer
 
     public void RunInstruction(IIntcodeInstruction instruction)
     {
-        instruction.Run();
+        instruction.Run(_program);
     }
     
 

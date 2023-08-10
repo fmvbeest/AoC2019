@@ -3,12 +3,12 @@ using AoC2019.Util.Intcode.Instructions.BaseInstructions;
 
 namespace AoC2019.Util.Intcode.Instructions;
 
-public class EqualInstruction : CompareInstruction
+public class EqualsInstruction : CompareInstruction
 {
-    public EqualInstruction(Opcode opcode, (int m1, int m2, int m3) parameterModes) 
+    public EqualsInstruction(Opcode opcode, (int m1, int m2, int m3) parameterModes) 
         : base(opcode, parameterModes) { }
     
-    public override void Run()
+    public override void Run(int[] memory)
     {
         throw new NotImplementedException();
     }

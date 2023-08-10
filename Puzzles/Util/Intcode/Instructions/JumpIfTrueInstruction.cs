@@ -3,12 +3,12 @@ using AoC2019.Util.Intcode.Instructions.BaseInstructions;
 
 namespace AoC2019.Util.Intcode.Instructions;
 
-public class JumpIfFalse : JumpInstruction
+public class JumpIfTrueInstruction : JumpInstruction
 {
-    public JumpIfFalse(Opcode opcode, (int m1, int m2, int m3) parameterModes) 
+    public JumpIfTrueInstruction(Opcode opcode, (int m1, int m2, int m3) parameterModes) 
         : base(opcode, parameterModes) { }
     
-    public override void Run()
+    public override void Run(int[] memory)
     {
         throw new NotImplementedException();
     }
