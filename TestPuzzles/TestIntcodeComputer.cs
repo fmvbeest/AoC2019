@@ -4,78 +4,54 @@ namespace TestPuzzles;
 
 public class TestIntcodeComputer
 {
-    private IntcodeConfig _defaultConfig = new() { InputValue = 100, PhaseSetting = 1, Noun = 1, Verb = 1 };
+    private readonly IntcodeConfig _defaultConfig = new() { InputValue = 100, PhaseSetting = 1, Noun = 1, Verb = 1 };
     
     [Fact]
     public void TestAdditionInstruction()
     {
         var program = new [] { 1, 0, 0, 0, 99 };
-        var vm = new IntcodeComputer(_defaultConfig, program);
         
-        vm.Run();
-        var output = vm.GetOutput();
-        
-        Assert.Equal(2, output);
+        Assert.Equal(2, GetMachineOutput(_defaultConfig, program));
     }
     
     [Fact]
     public void TestAdditionInstruction_WithParameterModes()
     {
         var program = new [] { 1001, 0, 0, 0, 99 };
-        var vm = new IntcodeComputer(_defaultConfig, program);
         
-        vm.Run();
-        var output = vm.GetOutput();
-        
-        Assert.Equal(1001, output);
+        Assert.Equal(1001, GetMachineOutput(_defaultConfig, program));
     }
     
     [Fact]
     public void TestMultiplication()
     {
         var program = new[] { 2, 3, 0, 3, 99 };
-        var vm = new IntcodeComputer(_defaultConfig, program);
         
-        vm.Run();
-        var output = vm.GetOutput();
-        
-        Assert.Equal(6, output);
+        Assert.Equal(6, GetMachineOutput(_defaultConfig, program));
     }
     
     [Fact]
     public void TestMultiplication_WithParameterModes()
     {
         var program = new[] { 102, 3, 0, 3, 99 };
-        var vm = new IntcodeComputer(_defaultConfig, program);
         
-        vm.Run();
-        var output = vm.GetOutput();
-        
-        Assert.Equal(306, output);
+        Assert.Equal(306, GetMachineOutput(_defaultConfig, program));
     }
     
     [Fact]
     public void TestInput()
     {
         var program = new[] { 3, 0, 99 };
-        var vm = new IntcodeComputer(_defaultConfig, program);
         
-        vm.Run();
-        var output = vm.GetOutput();
-        
-        Assert.Equal(_defaultConfig.InputValue, output);
+        Assert.Equal(_defaultConfig.InputValue, GetMachineOutput(_defaultConfig, program));
     }
     
     [Fact]
     public void TestOutput()
     {
         var program = new[] { 4, 2, 99 };
-        var vm = new IntcodeComputer(_defaultConfig, program);
         
-        vm.Run();
-        var output = vm.GetOutput();
-        
-        Assert.Equal(99, output);
+        Assert.Equal(99, GetMachineOutput(_defaultConfig, program));
     }
     
     [Fact]
@@ -83,12 +59,8 @@ public class TestIntcodeComputer
     {
         const int compare = 12;
         var program = new [] { 3, 9, 8, 9, 10, 9, 4, 9, 99, -1, compare };
-        var vm = new IntcodeComputer(_defaultConfig, program);
         
-        vm.Run();
-        var output = vm.GetOutput();
-        
-        Assert.Equal(0, output);
+        Assert.Equal(0, GetMachineOutput(_defaultConfig, program));
     }
     
     [Fact]
@@ -96,12 +68,8 @@ public class TestIntcodeComputer
     {
         const int compare = 12;
         var program = new [] { 3, 9, 8, 9, 10, 9, 4, 9, 99, -1, compare };
-        var vm = new IntcodeComputer(new IntcodeConfig{ InputValue = 12 }, program);
         
-        vm.Run();
-        var output = vm.GetOutput();
-        
-        Assert.Equal(1, output);
+        Assert.Equal(1, GetMachineOutput(new IntcodeConfig{ InputValue = 12 }, program));
     }
     
     [Fact]
@@ -109,12 +77,8 @@ public class TestIntcodeComputer
     {
         const int compare = 12;
         var program = new[] { 3, 3, 1108, -1, compare, 3, 4, 3, 99 };
-        var vm = new IntcodeComputer(_defaultConfig, program);
         
-        vm.Run();
-        var output = vm.GetOutput();
-        
-        Assert.Equal(0, output);
+        Assert.Equal(0, GetMachineOutput(_defaultConfig, program));
     }
     
     [Fact]
@@ -122,12 +86,8 @@ public class TestIntcodeComputer
     {
         const int compare = 12;
         var program = new[] { 3, 3, 1108, -1, compare, 3, 4, 3, 99 };
-        var vm = new IntcodeComputer(new IntcodeConfig{ InputValue = 12 }, program);
         
-        vm.Run();
-        var output = vm.GetOutput();
-        
-        Assert.Equal(1, output);
+        Assert.Equal(1, GetMachineOutput(new IntcodeConfig{ InputValue = 12 }, program));
     }
     
     [Fact]
@@ -135,12 +95,8 @@ public class TestIntcodeComputer
     {
         const int compare = 12;
         var program = new [] { 3, 9, 7, 9, 10, 9, 4, 9, 99, -1, compare };
-        var vm = new IntcodeComputer(new IntcodeConfig{ InputValue = 5 }, program);
         
-        vm.Run();
-        var output = vm.GetOutput();
-        
-        Assert.Equal(1, output);
+        Assert.Equal(1, GetMachineOutput(new IntcodeConfig{ InputValue = 5 }, program));
     }
     
     [Fact]
@@ -148,12 +104,8 @@ public class TestIntcodeComputer
     {
         const int compare = 12;
         var program = new [] { 3, 9, 7, 9, 10, 9, 4, 9, 99, -1, compare };
-        var vm = new IntcodeComputer(new IntcodeConfig{ InputValue = 20 }, program);
         
-        vm.Run();
-        var output = vm.GetOutput();
-        
-        Assert.Equal(0, output);
+        Assert.Equal(0, GetMachineOutput(new IntcodeConfig{ InputValue = 20 }, program));
     }
     
     [Fact]
@@ -161,12 +113,8 @@ public class TestIntcodeComputer
     {
         const int compare = 12;
         var program = new [] { 3, 9, 7, 9, 10, 9, 4, 9, 99, -1, compare };
-        var vm = new IntcodeComputer(new IntcodeConfig{ InputValue = 12 }, program);
         
-        vm.Run();
-        var output = vm.GetOutput();
-        
-        Assert.Equal(0, output);
+        Assert.Equal(0, GetMachineOutput(new IntcodeConfig{ InputValue = 12 }, program));
     }
     
     [Fact]
@@ -174,12 +122,8 @@ public class TestIntcodeComputer
     {
         const int compare = 12;
         var program = new[] { 3, 3, 1107, -1, compare, 3, 4, 3, 99 };
-        var vm = new IntcodeComputer(new IntcodeConfig{ InputValue = 5 }, program);
         
-        vm.Run();
-        var output = vm.GetOutput();
-        
-        Assert.Equal(1, output);
+        Assert.Equal(1, GetMachineOutput(new IntcodeConfig{ InputValue = 5 }, program));
     }
     
     [Fact]
@@ -187,12 +131,8 @@ public class TestIntcodeComputer
     {
         const int compare = 12;
         var program = new[] { 3, 3, 1107, -1, compare, 3, 4, 3, 99 };
-        var vm = new IntcodeComputer(new IntcodeConfig{ InputValue = 12 }, program);
         
-        vm.Run();
-        var output = vm.GetOutput();
-        
-        Assert.Equal(0, output);
+        Assert.Equal(0, GetMachineOutput(new IntcodeConfig{ InputValue = 12 }, program));
     }
     
     [Fact]
@@ -200,47 +140,39 @@ public class TestIntcodeComputer
     {
         const int compare = 12;
         var program = new[] { 3, 3, 1107, -1, compare, 3, 4, 3, 99 };
-        var vm = new IntcodeComputer(new IntcodeConfig{ InputValue = 20 }, program);
         
-        vm.Run();
-        var output = vm.GetOutput();
-        
-        Assert.Equal(0, output);
+        Assert.Equal(0, GetMachineOutput(new IntcodeConfig{ InputValue = 20 }, program));
     }
     
     [Fact]
     public void TestJumpZeroInput()
     {
         var program = new[] { 3, 12, 6, 12, 15, 1, 13, 14, 13, 4, 13, 99, -1, 0, 1, 9 };
-        var vm = new IntcodeComputer(new IntcodeConfig{ InputValue = 0 }, program);
         
-        vm.Run();
-        var output = vm.GetOutput();
-        
-        Assert.Equal(0, output);
+        Assert.Equal(0, GetMachineOutput(new IntcodeConfig{ InputValue = 0 }, program));
     }
     
     [Fact]
     public void TestJumpNonZeroInput()
     {
         var program = new[] { 3, 12, 6, 12, 15, 1, 13, 14, 13, 4, 13, 99, -1, 0, 1, 9 };
-        var vm = new IntcodeComputer(_defaultConfig, program);
         
-        vm.Run();
-        var output = vm.GetOutput();
-        
-        Assert.Equal(1, output);
+        Assert.Equal(1, GetMachineOutput(_defaultConfig, program));
     }
     
     [Fact]
     public void TestJumpNonZeroInput2()
     {
         var program = new[] { 3, 3, 1105, -1, 9, 1101, 0, 0, 12, 4, 12, 99, 1 };
-        var vm = new IntcodeComputer(_defaultConfig, program);
         
+        Assert.Equal(1, GetMachineOutput(_defaultConfig, program));
+    }
+
+    private static int GetMachineOutput(IntcodeConfig config, int[] program)
+    {
+        var vm = new IntcodeComputer(config, program);
         vm.Run();
-        var output = vm.GetOutput();
         
-        Assert.Equal(1, output);
+        return vm.GetOutput();
     }
 }
