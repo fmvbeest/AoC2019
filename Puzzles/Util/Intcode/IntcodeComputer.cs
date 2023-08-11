@@ -53,6 +53,15 @@ public class IntcodeComputer
         _outputValue = intermediateOutput;
     }
 
+    public void Initialize()
+    {
+        if (_config.Noun.HasValue && _config.Verb.HasValue)
+        {
+            _memory[1] = _config.Noun.Value;
+            _memory[2] = _config.Verb.Value;
+        }
+    }
+
     private int ProcessValue(IIntcodeInstruction instruction)
     {
         var output = instruction.Value();
