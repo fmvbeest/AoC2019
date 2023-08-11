@@ -12,9 +12,4 @@ public class OutputInstruction : IOInstruction
     {
         ResultValue = GetParameterValue(memory, Parameter1);
     }
-
-    public override int Value()
-    {
-        return ResultValue;
-    }
 }

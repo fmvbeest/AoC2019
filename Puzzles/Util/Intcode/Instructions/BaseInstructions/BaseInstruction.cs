@@ -24,7 +24,10 @@ public abstract class BaseInstruction : IIntcodeInstruction
 
     public abstract int Size();
 
-    public abstract int Value();
+    public int Value()
+    {
+        return ResultValue;
+    }
     
     public int OutputAddress()
     {

@@ -16,9 +16,4 @@ public class JumpIfTrueInstruction : JumpInstruction
             ResultValue = GetParameterValue(memory, Parameter2);            
         }
     }
-
-    public override int Value()
-    {
-        return ResultValue;
-    }
 }

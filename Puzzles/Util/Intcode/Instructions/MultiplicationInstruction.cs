@@ -12,9 +12,4 @@ public class MultiplicationInstruction : ArithmeticInstruction
     {
         ResultValue = GetParameterValue(memory, Parameter1) * GetParameterValue(memory, Parameter2);
     }
-
-    public override int Value()
-    {
-        return ResultValue;
-    }
 }

@@ -12,9 +12,4 @@ public class EqualsInstruction : CompareInstruction
     {
         ResultValue = GetParameterValue(memory, Parameter1) == GetParameterValue(memory, Parameter2) ? 1 : 0;
     }
-
-    public override int Value()
-    {
-        return ResultValue;
-    }
 }

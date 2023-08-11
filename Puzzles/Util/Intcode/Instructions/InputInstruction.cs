@@ -15,11 +15,6 @@ public class InputInstruction : IOInstruction
         ResultValue = _inputValue;
     }
 
-    public override int Value()
-    {
-        return ResultValue;
-    }
-
     public void SetInputValue(int value)
     {
         _inputValue = value;
