@@ -17,7 +17,7 @@ public class InstructionParser
         return opcode switch
         {
             Opcode.Addition => new AdditionInstruction(opcode, parametersModes),
-            Opcode.Multiplication => new AdditionInstruction(opcode, parametersModes),
+            Opcode.Multiplication => new MultiplicationInstruction(opcode, parametersModes),
             Opcode.Input => new InputInstruction(opcode, parametersModes),
             Opcode.Output => new OutputInstruction(opcode, parametersModes),
             Opcode.JumpIfTrue => new JumpIfTrueInstruction(opcode, parametersModes),
@@ -34,7 +34,6 @@ public class InstructionParser
         switch (instruction.Opcode)
         {
             case Opcode.Input:
-                instruction.Parameter1.Value = inputValue;
                 instruction.Parameter3.Value = memory[pointer + 1];
                 break;
             case Opcode.Addition or Opcode.Multiplication or Opcode.LessThan or Opcode.Equals:

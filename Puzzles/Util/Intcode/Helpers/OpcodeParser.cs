@@ -17,8 +17,12 @@ public class OpcodeParser
         }
         
         opcodeConfig.Opcode = (Opcode)int.Parse($"{digits[1]}{digits[0]}");
-    
-        foreach (var mode in digits.TakeLast(3))
+
+        var modes = digits.ToList();
+        modes.RemoveAt(0);
+        modes.RemoveAt(0);
+        
+        foreach (var mode in modes)
         {
             opcodeConfig.SetParameterMode(mode);
         }

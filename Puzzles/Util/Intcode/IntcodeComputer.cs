@@ -7,8 +7,8 @@ namespace AoC2019.Util.Intcode;
 
 public class IntcodeComputer
 {
-    private IntcodeConfig _config;
-    private int[] _memory;
+    private readonly IntcodeConfig _config;
+    private readonly int[] _memory;
     private int _instructionPointer;
     private int _outputValue;
     
@@ -16,12 +16,8 @@ public class IntcodeComputer
     {
         _config = config;
         _memory = program;
+        _outputValue = 0;
         _instructionPointer = 0;
-    }
-
-    public void StoreValue(int pointer, int value)
-    {
-        _memory[pointer] = value;
     }
 
     public void Run()

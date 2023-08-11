@@ -12,12 +12,12 @@ public class InputInstruction : IOInstruction
     
     public override void Run(int[] memory)
     {
-        ResultValue = Parameter1.Value;
+        ResultValue = _inputValue;
     }
 
     public override int Value()
     {
-        throw new NotImplementedException();
+        return ResultValue;
     }
 
     public void SetInputValue(int value)

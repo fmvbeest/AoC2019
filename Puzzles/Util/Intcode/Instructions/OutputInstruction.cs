@@ -15,6 +15,6 @@ public class OutputInstruction : IOInstruction
 
     public override int Value()
     {
-        throw new NotImplementedException();
+        return ResultValue;
     }
 }
