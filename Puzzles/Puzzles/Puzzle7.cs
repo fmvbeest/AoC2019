@@ -11,10 +11,7 @@ public class Puzzle7 : PuzzleBase<IEnumerable<int>, int, int>
     public override int PartOne(IEnumerable<int> input)
     {
         var program = input.ToArray();
-        
-        var amplifierSettings = new [] { 0, 1, 2, 3, 4 };
-        var permutations = amplifierSettings.GetPermutations();
-
+        var permutations = new [] { 0, 1, 2, 3, 4 }.GetPermutations();
         var maxOutput = 0;
         int inputValue;
 
@@ -23,7 +20,7 @@ public class Puzzle7 : PuzzleBase<IEnumerable<int>, int, int>
             inputValue = 0;
             foreach (var setting in permutation)
             {
-                var config = new IntcodeConfig() { InputValue = inputValue, PhaseSetting = setting};
+                var config = new IntcodeConfig { InputValue = inputValue, PhaseSetting = setting };
                 var vm = new IntcodeComputer(config, program.ToArray());
                 vm.Run();
                 inputValue = vm.GetOutput();
