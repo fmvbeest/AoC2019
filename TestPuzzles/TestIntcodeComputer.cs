@@ -4,7 +4,7 @@ namespace TestPuzzles;
 
 public class TestIntcodeComputer
 {
-    private readonly IntcodeConfig _defaultConfig = new() { InputValue = 100, PhaseSetting = 1, Noun = 1, Verb = 1 };
+    private readonly IntcodeConfig _defaultConfig = new() { InputValue = 100 };
     
     [Fact]
     public void TestAdditionInstruction()

@@ -52,14 +52,4 @@ public class InstructionParser
 
         return instruction;
     }
-
-    private static IEnumerable<int> GetDigits(int source)
-    {
-        while (source > 0)
-        {
-            var digit = source % 10;
-            source /= 10;
-            yield return digit;
-        }
-    }
 }
