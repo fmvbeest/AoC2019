@@ -48,15 +48,12 @@ public class Puzzle7 : PuzzleBase<IEnumerable<int>, int, int>
             }
             amplifiers[0].AddInputValue(0);
 
-            var isRunning = new[] { true, true, true, true, true };
-            
-            while (isRunning.Any(x => x))
+            while (amplifiers.Any(x => x.IsRunning()))
             {
                 for (var i = 0; i < amplifiers.Length; i++)
                 {
                     amplifiers[i].AddInputValues(amplifiers[(i+4) % amplifiers.Length].GetOutputBuffer());
                     amplifiers[i].Run();
-                    isRunning[i] = amplifiers[i].IsRunning();    
                 }
             }
 
