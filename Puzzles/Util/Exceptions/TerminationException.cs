@@ -1,6 +1,6 @@
 ﻿namespace AoC2019.Util.Exceptions;
 
-public class TerminationException : Exception
+public class TerminationException : IntcodeException
 {
     
 }

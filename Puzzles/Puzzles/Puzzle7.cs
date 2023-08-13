@@ -33,7 +33,37 @@ public class Puzzle7 : PuzzleBase<IEnumerable<int>, int, int>
 
     public override int PartTwo(IEnumerable<int> input)
     {
-        return 0;
+        var program = input.ToArray();
+        var permutations = new [] { 5, 6, 7, 8, 9 }.GetPermutations();
+        var maxOutput = 0;
+
+        foreach (var permutation in permutations)
+        {
+            var settings = permutation.ToArray();
+            
+            var amplifiers = new IntcodeComputer[settings.Length];
+            for (var i = 0; i < amplifiers.Length; i++)
+            {
+                amplifiers[i] = new IntcodeComputer(new IntcodeConfig { PhaseSetting = settings[i] }, program.ToArray());    
+            }
+            amplifiers[0].AddInputValue(0);
+
+            var isRunning = new[] { true, true, true, true, true };
+            
+            while (isRunning.Any(x => x))
+            {
+                for (var i = 0; i < amplifiers.Length; i++)
+                {
+                    amplifiers[i].AddInputValues(amplifiers[(i+4) % amplifiers.Length].GetOutputBuffer());
+                    amplifiers[i].Run();
+                    isRunning[i] = amplifiers[i].IsRunning();    
+                }
+            }
+
+            maxOutput = Math.Max(maxOutput, amplifiers[^1].GetOutput());
+        }
+
+        return maxOutput;
     }
 
     public override IEnumerable<int> Preprocess(IPuzzleInput input, int part = 1)

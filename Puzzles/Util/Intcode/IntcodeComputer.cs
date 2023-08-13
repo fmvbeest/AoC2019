@@ -12,6 +12,8 @@ public class IntcodeComputer
     private int _instructionPointer;
     private int _outputValue;
     private readonly List<int> _inputValues;
+    private readonly List<int> _outputBuffer;
+    private bool _isRunning;
     
     public IntcodeComputer(IntcodeConfig config, int[] program)
     {
@@ -20,6 +22,8 @@ public class IntcodeComputer
         _outputValue = 0;
         _instructionPointer = 0;
         _inputValues = new List<int>();
+        _outputBuffer = new List<int>();
+        _isRunning = true;
         Initialize();
     }
 
@@ -41,15 +45,20 @@ public class IntcodeComputer
                 }
 
                 intermediateOutput = ProcessValue(instruction);
+                if (instruction is OutputInstruction)
+                {
+                    _outputBuffer.Add(intermediateOutput);
+                }
+
                 _instructionPointer += instruction.Size();
             }
-            catch (Exception e)
+            catch (IntcodeException e)
             {
-                if (e is TerminationException or UnknownInstructionException)
+                if (e is TerminationException)
                 {
-                    break;
+                    _isRunning = false;
                 }
-                throw;
+                break;
             }
         }
 
@@ -66,7 +75,8 @@ public class IntcodeComputer
         
         if (_config.PhaseSetting.HasValue) 
             AddInputValue(_config.PhaseSetting.Value);
-        AddInputValue(_config.InputValue);
+        if (_config.InputValue.HasValue) 
+            AddInputValue(_config.InputValue.Value);
     }
 
     private int ProcessValue(IIntcodeInstruction instruction)
@@ -86,12 +96,16 @@ public class IntcodeComputer
         var instruction = InstructionParser.ParseInstruction(_memory[_instructionPointer]);
         if (instruction is InputInstruction inputInstruction)
         {
+            if (_inputValues.Count == 0)
+            {
+                throw new NoInputException();
+            }
             inputInstruction.SetInputValue(_inputValues.First());
             _inputValues.RemoveAt(0);
         }
 
         instruction = InstructionParser.FillParameters(_memory, instruction, 
-            _instructionPointer, _config.InputValue);
+            _instructionPointer);
 
         return instruction;
     }
@@ -101,8 +115,29 @@ public class IntcodeComputer
         return _outputValue;
     }
 
+    public IEnumerable<int> GetOutputBuffer()
+    {
+        var buffer = new int[_outputBuffer.Count];
+        _outputBuffer.CopyTo(buffer);
+        _outputBuffer.Clear();
+        return buffer;
+    }
+
     public void AddInputValue(int value)
     {
         _inputValues.Add(value);
+    }
+    
+    public void AddInputValues(IEnumerable<int> values)
+    {
+        foreach (var value in values)
+        {
+            _inputValues.Add(value);            
+        }
+    }
+
+    public bool IsRunning()
+    {
+        return _isRunning;
     }
 }

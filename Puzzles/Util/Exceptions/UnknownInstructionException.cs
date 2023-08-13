@@ -1,6 +1,6 @@
 ﻿namespace AoC2019.Util.Exceptions;
 
-public class UnknownInstructionException : Exception
+public class UnknownInstructionException : IntcodeException
 {
     
 }

@@ -29,7 +29,7 @@ public class InstructionParser
         };
     }
     
-    public static IIntcodeInstruction FillParameters(int[] memory, IIntcodeInstruction instruction, int pointer, int inputValue)
+    public static IIntcodeInstruction FillParameters(int[] memory, IIntcodeInstruction instruction, int pointer)
     {
         switch (instruction.Opcode)
         {
