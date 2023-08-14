@@ -4,7 +4,7 @@ namespace AoC2019.Util.Intcode.Helpers;
 
 public class OpcodeParser
 {
-    public static OpcodeConfig ParseOpcodeConfig(int instructionOpcode)
+    public static OpcodeConfig ParseOpcodeConfig(long instructionOpcode)
     {
         var opcodeConfig = new OpcodeConfig();
         
@@ -24,13 +24,13 @@ public class OpcodeParser
         
         foreach (var mode in modes)
         {
-            opcodeConfig.SetParameterMode(mode);
+            opcodeConfig.SetParameterMode(Convert.ToInt32(mode));
         }
 
         return opcodeConfig;
     }
     
-    private static IEnumerable<int> GetDigits(int source)
+    private static IEnumerable<long> GetDigits(long source)
     {
         while (source > 0)
         {

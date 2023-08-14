@@ -3,12 +3,12 @@ using AoC2019.Util.Intcode;
 
 namespace AoC2019.Puzzles;
 
-public class Puzzle2 : PuzzleBase<IEnumerable<int>, int, int>
+public class Puzzle2 : PuzzleBase<IEnumerable<long>, long, long>
 {
     protected override string Filename => "Input/puzzle-input-02.txt";
     protected override string PuzzleTitle => "--- Day 2: 1202 Program Alarm ---";
 
-    public override int PartOne(IEnumerable<int> input)
+    public override long PartOne(IEnumerable<long> input)
     {
         var config = new IntcodeConfig { Noun = 12, Verb = 2 };
         var virtualMachine = new IntcodeComputer(config, input.ToArray());
@@ -18,7 +18,7 @@ public class Puzzle2 : PuzzleBase<IEnumerable<int>, int, int>
         return virtualMachine.GetOutput();
     }
 
-    public override int PartTwo(IEnumerable<int> input)
+    public override long PartTwo(IEnumerable<long> input)
     {
         const int requiredOutput = 19690720;
         var requiredConfig = new IntcodeConfig();
@@ -46,8 +46,8 @@ public class Puzzle2 : PuzzleBase<IEnumerable<int>, int, int>
         return 100 * requiredConfig.Noun!.Value + requiredConfig.Verb!.Value;
     }
 
-    public override IEnumerable<int> Preprocess(IPuzzleInput input, int part = 1)
+    public override IEnumerable<long> Preprocess(IPuzzleInput input, int part = 1)
     {
-        return input.GetFirstLine().Trim().Split(',').Select(int.Parse);
+        return input.GetFirstLine().Trim().Split(',').Select(long.Parse);
     }
 }

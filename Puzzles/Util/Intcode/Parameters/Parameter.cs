@@ -13,5 +13,5 @@ public class Parameter
 
     public ParameterMode ParameterMode { get; set; }
 
-    public int Value { get; set; }
+    public long Value { get; set; }
 }

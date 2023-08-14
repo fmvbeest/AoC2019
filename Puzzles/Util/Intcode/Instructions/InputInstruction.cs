@@ -5,17 +5,17 @@ namespace AoC2019.Util.Intcode.Instructions;
 
 public class InputInstruction : IOInstruction
 {
-    private int _inputValue;
+    private long _inputValue;
     
     public InputInstruction(Opcode opcode, (int m1, int m2, int m3) parameterModes) 
         : base(opcode, parameterModes) { }
     
-    public override void Run(int[] memory)
+    public override void Run(long[] memory)
     {
         ResultValue = _inputValue;
     }
 
-    public void SetInputValue(int value)
+    public void SetInputValue(long value)
     {
         _inputValue = value;
     }

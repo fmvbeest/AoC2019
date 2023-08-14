@@ -7,7 +7,7 @@ namespace AoC2019.Util.Intcode.Helpers;
 
 public class InstructionParser
 {
-    public static IIntcodeInstruction ParseInstruction(int instructionOpcode)
+    public static IIntcodeInstruction ParseInstruction(long instructionOpcode)
     {
         var opcodeConfig = OpcodeParser.ParseOpcodeConfig(instructionOpcode);
     
@@ -29,7 +29,7 @@ public class InstructionParser
         };
     }
     
-    public static IIntcodeInstruction FillParameters(int[] memory, IIntcodeInstruction instruction, int pointer)
+    public static IIntcodeInstruction FillParameters(long[] memory, IIntcodeInstruction instruction, long pointer)
     {
         switch (instruction.Opcode)
         {

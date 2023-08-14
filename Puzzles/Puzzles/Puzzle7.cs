@@ -3,17 +3,17 @@ using AoC2019.Util.Intcode;
 
 namespace AoC2019.Puzzles;
 
-public class Puzzle7 : PuzzleBase<IEnumerable<int>, int, int>
+public class Puzzle7 : PuzzleBase<IEnumerable<long>, long, long>
 {
     protected override string Filename => "Input/puzzle-input-07.txt";
     protected override string PuzzleTitle => "--- Day 7: Amplification Circuit ---";
 
-    public override int PartOne(IEnumerable<int> input)
+    public override long PartOne(IEnumerable<long> input)
     {
         var program = input.ToArray();
         var permutations = new [] { 0, 1, 2, 3, 4 }.GetPermutations();
-        var maxOutput = 0;
-        int inputValue;
+        long maxOutput = 0;
+        long inputValue;
 
         foreach (var permutation in permutations)
         {
@@ -31,11 +31,11 @@ public class Puzzle7 : PuzzleBase<IEnumerable<int>, int, int>
         return maxOutput;
     }
 
-    public override int PartTwo(IEnumerable<int> input)
+    public override long PartTwo(IEnumerable<long> input)
     {
         var program = input.ToArray();
         var permutations = new [] { 5, 6, 7, 8, 9 }.GetPermutations();
-        var maxOutput = 0;
+        long maxOutput = 0;
 
         foreach (var permutation in permutations)
         {
@@ -63,8 +63,8 @@ public class Puzzle7 : PuzzleBase<IEnumerable<int>, int, int>
         return maxOutput;
     }
 
-    public override IEnumerable<int> Preprocess(IPuzzleInput input, int part = 1)
+    public override IEnumerable<long> Preprocess(IPuzzleInput input, int part = 1)
     {
-        return input.GetFirstLine().Trim().Split(',').Select(int.Parse);
+        return input.GetFirstLine().Trim().Split(',').Select(long.Parse);
     }
 }

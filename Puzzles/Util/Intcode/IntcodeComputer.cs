@@ -8,28 +8,28 @@ namespace AoC2019.Util.Intcode;
 public class IntcodeComputer
 {
     private readonly IntcodeConfig _config;
-    private readonly int[] _memory;
-    private int _instructionPointer;
-    private int _outputValue;
-    private readonly List<int> _inputValues;
-    private readonly List<int> _outputBuffer;
+    private readonly long[] _memory;
+    private long _instructionPointer;
+    private long _outputValue;
+    private readonly List<long> _inputValues;
+    private readonly List<long> _outputBuffer;
     private bool _isRunning;
     
-    public IntcodeComputer(IntcodeConfig config, int[] program)
+    public IntcodeComputer(IntcodeConfig config, long[] program)
     {
         _config = config;
         _memory = program;
         _outputValue = 0;
         _instructionPointer = 0;
-        _inputValues = new List<int>();
-        _outputBuffer = new List<int>();
+        _inputValues = new List<long>();
+        _outputBuffer = new List<long>();
         _isRunning = true;
         Initialize();
     }
 
     public void Run()
     {
-        var intermediateOutput = -1;
+        long intermediateOutput = -1;
         
         while (true)
         {
@@ -79,7 +79,7 @@ public class IntcodeComputer
             AddInputValue(_config.InputValue.Value);
     }
 
-    private int ProcessValue(IIntcodeInstruction instruction)
+    private long ProcessValue(IIntcodeInstruction instruction)
     {
         var output = instruction.Value();
         
@@ -110,25 +110,25 @@ public class IntcodeComputer
         return instruction;
     }
 
-    public int GetOutput()
+    public long GetOutput()
     {
         return _outputValue;
     }
 
-    public IEnumerable<int> GetOutputBuffer()
+    public IEnumerable<long> GetOutputBuffer()
     {
-        var buffer = new int[_outputBuffer.Count];
+        var buffer = new long[_outputBuffer.Count];
         _outputBuffer.CopyTo(buffer);
         _outputBuffer.Clear();
         return buffer;
     }
 
-    public void AddInputValue(int value)
+    public void AddInputValue(long value)
     {
         _inputValues.Add(value);
     }
     
-    public void AddInputValues(IEnumerable<int> values)
+    public void AddInputValues(IEnumerable<long> values)
     {
         foreach (var value in values)
         {

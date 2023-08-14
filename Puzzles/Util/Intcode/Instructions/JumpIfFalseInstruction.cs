@@ -8,7 +8,7 @@ public class JumpIfFalseInstruction : JumpInstruction
     public JumpIfFalseInstruction(Opcode opcode, (int m1, int m2, int m3) parameterModes) 
         : base(opcode, parameterModes) { }
     
-    public override void Run(int[] memory)
+    public override void Run(long[] memory)
     {
         Jump = 0 == GetParameterValue(memory, Parameter1);
         if (Jump)

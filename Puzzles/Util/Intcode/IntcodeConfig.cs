@@ -2,8 +2,8 @@
 
 public class IntcodeConfig
 {
-    public int? InputValue { get; set; }
-    public int? PhaseSetting { get; set; }
-    public int? Noun { get; set; }
-    public int? Verb { get; set; }
+    public long? InputValue { get; set; }
+    public long? PhaseSetting { get; set; }
+    public long? Noun { get; set; }
+    public long? Verb { get; set; }
 }

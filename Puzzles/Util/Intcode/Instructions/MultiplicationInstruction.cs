@@ -8,7 +8,7 @@ public class MultiplicationInstruction : ArithmeticInstruction
     public MultiplicationInstruction(Opcode opcode, (int m1, int m2, int m3) parameterModes) 
         : base(opcode, parameterModes) { }
     
-    public override void Run(int[] memory)
+    public override void Run(long[] memory)
     {
         ResultValue = GetParameterValue(memory, Parameter1) * GetParameterValue(memory, Parameter2);
     }
