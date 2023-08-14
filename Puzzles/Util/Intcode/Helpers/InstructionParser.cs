@@ -24,6 +24,7 @@ public class InstructionParser
             Opcode.JumpIfFalse => new JumpIfFalseInstruction(opcode, parametersModes),
             Opcode.LessThan => new LessThanInstruction(opcode, parametersModes),
             Opcode.Equals => new EqualsInstruction(opcode, parametersModes),
+            Opcode.RelativeBaseOffset => new RelativeBaseOffsetInstruction(opcode, parametersModes),
             Opcode.Termination => throw new TerminationException(),
             _ => throw new ArgumentOutOfRangeException()
         };
@@ -34,14 +35,14 @@ public class InstructionParser
         switch (instruction.Opcode)
         {
             case Opcode.Input:
-                instruction.Parameter3.Value = memory[pointer + 1];
+                instruction.Parameter1.Value = memory[pointer + 1];
                 break;
             case Opcode.Addition or Opcode.Multiplication or Opcode.LessThan or Opcode.Equals:
                 instruction.Parameter1.Value = memory[pointer + 1];
                 instruction.Parameter2.Value = memory[pointer + 2];
                 instruction.Parameter3.Value = memory[pointer + 3];
                 break;
-            case Opcode.Output:
+            case Opcode.Output or Opcode.RelativeBaseOffset:
                 instruction.Parameter1.Value = memory[pointer + 1];
                 break;
             case Opcode.JumpIfTrue or Opcode.JumpIfFalse:

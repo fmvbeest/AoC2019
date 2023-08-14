@@ -20,7 +20,7 @@ public abstract class BaseInstruction : IIntcodeInstruction
         Parameter3 = new Parameter(parameterModes.m3);
     }
 
-    public abstract void Run(long[] memory);
+    public abstract void Run(long[] memory, long relativeBase);
 
     public abstract int Size();
 
@@ -28,14 +28,21 @@ public abstract class BaseInstruction : IIntcodeInstruction
     {
         return ResultValue;
     }
-    
-    public long OutputAddress()
+
+    public virtual long OutputAddress(long[] memory, long relativeBase)
     {
+        if (Parameter3.ParameterMode == ParameterMode.Relative)
+            return relativeBase + Parameter3.Value;
         return Parameter3.Value;
     }
 
-    protected static long GetParameterValue(long[] memory, Parameter parameter)
+    protected static long GetParameterValue(long[] memory, Parameter parameter, long relativeBase)
     {
-        return parameter.ParameterMode == ParameterMode.Immediate ? parameter.Value : memory[parameter.Value];
+        if (parameter.ParameterMode == ParameterMode.Immediate)
+            return parameter.Value;
+        if (parameter.ParameterMode == ParameterMode.Position)
+            return memory[parameter.Value];
+
+        return memory[relativeBase + parameter.Value];
     }
 }

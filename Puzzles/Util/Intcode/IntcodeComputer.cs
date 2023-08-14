@@ -11,19 +11,32 @@ public class IntcodeComputer
     private readonly long[] _memory;
     private long _instructionPointer;
     private long _outputValue;
+    private long _relativeBase;
+    private bool _isRunning;
     private readonly List<long> _inputValues;
     private readonly List<long> _outputBuffer;
-    private bool _isRunning;
-    
+
     public IntcodeComputer(IntcodeConfig config, long[] program)
     {
         _config = config;
-        _memory = program;
-        _outputValue = 0;
+        
+        if (_config.MemSizeFactor == 1)
+        {
+            _memory = program;            
+        }
+        else
+        {
+            _memory = new long[program.Length * _config.MemSizeFactor];
+            Array.Copy(program, _memory, program.Length);
+        }
+        
         _instructionPointer = 0;
+        _outputValue = 0;
+        _relativeBase = 0;
+        _isRunning = true;
         _inputValues = new List<long>();
         _outputBuffer = new List<long>();
-        _isRunning = true;
+        
         Initialize();
     }
 
@@ -36,17 +49,22 @@ public class IntcodeComputer
             try
             {
                 var instruction = PrepareInstruction();
-                instruction.Run(_memory);
+                instruction.Run(_memory, _relativeBase);
 
                 if (instruction is JumpInstruction jumpInstruction && jumpInstruction.Success())
                 {
                     _instructionPointer = instruction.Value();
                     continue;
                 }
-
+                
+                if (instruction is RelativeBaseOffsetInstruction)
+                {
+                    _relativeBase += instruction.Value();
+                }
                 intermediateOutput = ProcessValue(instruction);
                 if (instruction is OutputInstruction)
                 {
+                    Console.WriteLine("Output: " + intermediateOutput);
                     _outputBuffer.Add(intermediateOutput);
                 }
 
@@ -83,9 +101,10 @@ public class IntcodeComputer
     {
         var output = instruction.Value();
         
-        if (instruction is not (OutputInstruction or JumpInstruction))
+        if (instruction is not (OutputInstruction or JumpInstruction or RelativeBaseOffsetInstruction))
         {
-            _memory[instruction.OutputAddress()] = output;
+            var outputAddress = instruction.OutputAddress(_memory, _relativeBase);
+            _memory[outputAddress] = output;
         }
         
         return output;

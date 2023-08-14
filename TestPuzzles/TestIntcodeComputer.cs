@@ -47,6 +47,14 @@ public class TestIntcodeComputer
     }
     
     [Fact]
+    public void TestInputRelative()
+    {
+        var program = new long[] { 9, 3, 203, 1, 4, 2, 99 };
+        
+        Assert.Equal(_defaultConfig.InputValue, GetMachineOutput(_defaultConfig, program));
+    }
+    
+    [Fact]
     public void TestOutput()
     {
         var program = new long[] { 4, 2, 99 };
@@ -166,6 +174,16 @@ public class TestIntcodeComputer
         var program = new long[] { 3, 3, 1105, -1, 9, 1101, 0, 0, 12, 4, 12, 99, 1 };
         
         Assert.Equal(1, GetMachineOutput(_defaultConfig, program));
+    }
+    
+    [Fact]
+    public void TestRelativeBaseOffset()
+    {
+        var program = new long[] { 109, 1, 204, -1, 1001, 100, 1, 100, 1008, 100, 16, 101, 1006, 101, 0, 99 };
+
+        var config = new IntcodeConfig { MemSizeFactor = 10 };
+        
+        Assert.Equal(0, GetMachineOutput(config, program));
     }
 
     private static long GetMachineOutput(IntcodeConfig config, long[] program)

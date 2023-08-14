@@ -8,8 +8,8 @@ public class OutputInstruction : IOInstruction
     public OutputInstruction(Opcode opcode, (int m1, int m2, int m3) parameterModes) 
         : base(opcode, parameterModes) { }
     
-    public override void Run(long[] memory)
+    public override void Run(long[] memory, long relativeBase)
     {
-        ResultValue = GetParameterValue(memory, Parameter1);
+        ResultValue = GetParameterValue(memory, Parameter1, relativeBase);
     }
 }

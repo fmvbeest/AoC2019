@@ -14,7 +14,7 @@ public interface IIntcodeInstruction
     /// <summary>
     /// Run the instruction. Computer value is stored internally. Retrieve using Value().
     /// </summary>
-    public void Run(long[] memory);
+    public void Run(long[] memory, long relativeBase);
 
     /// <summary>
     /// Instruction Size, which is Opcode + number of parameters used.
@@ -32,5 +32,5 @@ public interface IIntcodeInstruction
     /// Returns the memory address the output should be written to
     /// </summary>
     /// <returns>Computed value after Run()</returns>
-    public long OutputAddress();
+    public long OutputAddress(long[] memory, long relativeBase);
 }

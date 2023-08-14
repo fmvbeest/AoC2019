@@ -10,5 +10,6 @@ public enum Opcode
     JumpIfFalse = 6,
     LessThan = 7,
     Equals = 8,
+    RelativeBaseOffset = 9,
     Termination = 99
 }

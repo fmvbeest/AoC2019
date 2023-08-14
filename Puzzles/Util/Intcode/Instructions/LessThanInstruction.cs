@@ -8,8 +8,10 @@ public class LessThanInstruction : CompareInstruction
     public LessThanInstruction(Opcode opcode, (int m1, int m2, int m3) parameterModes) 
         : base(opcode, parameterModes) { }
     
-    public override void Run(long[] memory)
+    public override void Run(long[] memory, long relativeBase)
     {
-        ResultValue = GetParameterValue(memory, Parameter1) < GetParameterValue(memory, Parameter2) ? 1 : 0;
+        ResultValue = GetParameterValue(memory, Parameter1, relativeBase) 
+                      < GetParameterValue(memory, Parameter2, relativeBase) 
+            ? 1 : 0;
     }
 }

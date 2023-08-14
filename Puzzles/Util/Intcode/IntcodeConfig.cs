@@ -6,4 +6,6 @@ public class IntcodeConfig
     public long? PhaseSetting { get; set; }
     public long? Noun { get; set; }
     public long? Verb { get; set; }
+
+    public long MemSizeFactor { get; set; } = 1;
 }
