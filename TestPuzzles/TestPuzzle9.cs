@@ -15,7 +15,7 @@ public class TestPuzzle9
     [Fact]
     public void TestPartTwoActual()
     {
-        Assert.Equal(0, _puzzle.PartTwo(_puzzle.Preprocess(_puzzleInput)));
+        Assert.Equal(76642, _puzzle.PartTwo(_puzzle.Preprocess(_puzzleInput)));
     }
     
     [Fact]
