@@ -10,13 +10,13 @@ public class TestPuzzle10
     [Fact]
     public void TestPartOneSample()
     {
-        Assert.Equal(0, _puzzle.PartOne(_puzzle.Preprocess(_testInput)));
+        Assert.Equal(210, _puzzle.PartOne(_puzzle.Preprocess(_testInput)));
     }
     
     [Fact]
     public void TestPartOneActual()
     {
-        Assert.Equal(0, _puzzle.PartOne(_puzzle.Preprocess(_puzzleInput)));
+        Assert.Equal(256, _puzzle.PartOne(_puzzle.Preprocess(_puzzleInput)));
     }
     
     [Fact]
