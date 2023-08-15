@@ -1,4 +1,5 @@
-﻿using AoC2019.Util.Navigation;
+﻿using AoC2019.Util;
+using AoC2019.Util.Navigation;
 
 namespace AoC2019.Puzzles;
 
@@ -11,39 +12,7 @@ public class Puzzle10 : PuzzleBase<IEnumerable<Coordinate>, int, int>
     {
         var asteroids = input.ToHashSet();
 
-        var rightBound = asteroids.Max(c => c.X);
-        var lowerBound = asteroids.Max(c => c.Y);
-
-        var maxMap = new int[rightBound+1, lowerBound+1];
-        
-        var maxAsteroids = 0;
-        var stationLocation = new Coordinate(0,0);
-
-        foreach (var asteroid in asteroids.ToArray())
-        {
-            var blocked = new HashSet<Coordinate>();
-            foreach (var otherAsteroid in asteroids.ToArray())
-            {
-                if (asteroid.Equals(otherAsteroid))
-                {
-                    continue;
-                }
-                
-                var diff = otherAsteroid - asteroid;
-                diff = MinimizeDiff(diff);
-                var current = otherAsteroid + diff;
-                while (current.X >= 0 && current.X <= rightBound && current.Y >= 0 && current.Y <= lowerBound)
-                {
-                    blocked.Add(current);
-                    current += diff;
-                }
-            }
-            var visible = asteroids.Except(blocked);
-            var numVisible = visible.Count();
-
-            maxAsteroids = Math.Max(maxAsteroids, numVisible);
-            maxMap[asteroid.X, asteroid.Y] = numVisible;
-        }
+        var location = FindBestLocation(asteroids, out var maxAsteroids);
 
         return maxAsteroids - 1;
     }
@@ -73,13 +42,13 @@ public class Puzzle10 : PuzzleBase<IEnumerable<Coordinate>, int, int>
         return asteroids;
     }
 
-    private Coordinate MinimizeDiff(Coordinate diff)
+    private static Coordinate MinimizeDiff(Coordinate diff)
     {
-        var gcd = (int)GCD((uint)Math.Abs(diff.X), (uint)Math.Abs(diff.Y));
+        var gcd = (int)Gcd((uint)Math.Abs(diff.X), (uint)Math.Abs(diff.Y));
         return new Coordinate(diff.X / gcd, diff.Y / gcd);
     }
     
-    private static uint GCD(uint a, uint b)
+    private static uint Gcd(uint a, uint b)
     {
         while (a != 0 && b != 0)
         {
@@ -90,5 +59,50 @@ public class Puzzle10 : PuzzleBase<IEnumerable<Coordinate>, int, int>
         }
 
         return a | b;
+    }
+
+    private static bool IsWithinBounds(Coordinate coordinate, Bounds bounds)
+    {
+        return coordinate.X >= bounds.Left && coordinate.X <= bounds.Right && coordinate.Y >= bounds.Upper &&
+            coordinate.Y <= bounds.Lower;
+    }
+
+    private static Coordinate FindBestLocation(HashSet<Coordinate> asteroids, out int numAsteroids)
+    {
+        var bounds = new Bounds { Upper = 0, Left = 0, Right = asteroids.Max(c => c.X), 
+            Lower = asteroids.Max(c => c.Y) };
+
+        var location = new Coordinate(0, 0);
+        
+        numAsteroids = 0;
+        
+        foreach (var asteroid in asteroids.ToArray())
+        {
+            var blocked = new HashSet<Coordinate>();
+            foreach (var otherAsteroid in asteroids.ToArray())
+            {
+                if (asteroid.Equals(otherAsteroid) || blocked.Contains(otherAsteroid))
+                {
+                    continue;
+                }
+                
+                var diff = MinimizeDiff(otherAsteroid - asteroid);
+                var current = otherAsteroid + diff;
+                while (IsWithinBounds(current, bounds))
+                {
+                    blocked.Add(current);
+                    current += diff;
+                }
+            }
+            var numVisible = asteroids.Except(blocked).Count();
+
+            if (numVisible > numAsteroids)
+            {
+                numAsteroids = numVisible;
+                location = new Coordinate(asteroid);
+            }
+        }
+        
+        return location;
     }
 }
